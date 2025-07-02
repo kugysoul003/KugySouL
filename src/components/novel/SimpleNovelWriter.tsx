@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Sparkles, Play, Pause, ArrowLeft, Trash2 } from 'lucide-react';
+import { Loader2, Sparkles, Play, Pause, ArrowLeft, Trash2, ChevronLeft } from 'lucide-react';
 import { sendChatMessage } from '@/services/api';
 import { countWords } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Progress } from '@/components/ui/progress';
 import { useRouter } from 'next/navigation';
+import { BackButton } from '@/components/ui/back-button';
 
 export default function SimpleNovelWriter() {
   const router = useRouter();
@@ -240,6 +241,11 @@ BEGIN CONTINUATION NOW:`;
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
+      {/* Mobile Back Button - Fixed at the top left for mobile */}
+      <div className="md:hidden fixed top-2 left-2 z-10 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+        <BackButton onClick={handleBack} label="Back" />
+      </div>
+
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Simple Novel Writer (2000 Words per Chapter)</h1>
         <Button 
@@ -253,7 +259,8 @@ BEGIN CONTINUATION NOW:`;
         </Button>
       </div>
       
-      <div className="flex items-center mb-4">
+      {/* Desktop Back Button - Only visible on desktop */}
+      <div className="hidden md:flex items-center mb-4">
         <Button 
           variant="ghost" 
           size="sm" 

@@ -8,8 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Unused
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BookOpen, Play, Pause, Sparkles, Users, Globe } from 'lucide-react';
+import { BookOpen, Play, Pause, Sparkles, Users, Globe, ChevronLeft } from 'lucide-react';
 // Removed unused: Edit, RotateCcw, FileText
+import { BackButton } from '@/components/ui/back-button';
 
 interface StoryWritingProps {
   project: StoryProject;
@@ -21,6 +22,7 @@ export function StoryWriting({ project, onUpdateProject }: StoryWritingProps) {
   const [editorContent, setEditorContent] = useState('');
   const [isAutoPilotMode, setIsAutoPilotMode] = useState(false);
   const [activeTab, setActiveTab] = useState('editor');
+  const [showMobileChapterList, setShowMobileChapterList] = useState(false);
 
   // Get all chapters from all parts
   const allChapters = project.outline.parts.flatMap(part => 
@@ -105,6 +107,49 @@ Konten akan disesuaikan dengan format yang dipilih (${selectedChapter.format}) d
 
   return (
     <div className="max-w-7xl mx-auto">
+      {/* Mobile Back Button - Fixed at the top left for mobile */}
+      <div className="lg:hidden fixed top-2 left-2 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+        <BackButton onClick={() => setShowMobileChapterList(!showMobileChapterList)} label={showMobileChapterList ? "Close" : "Chapters"} />
+      </div>
+
+      {/* Mobile Chapter List Overlay */}
+      {showMobileChapterList && (
+        <div className="lg:hidden fixed inset-0 bg-white/95 z-40 p-4 pt-14 overflow-auto">
+          <h3 className="text-lg font-bold mb-4">Chapters</h3>
+          {project.outline.parts.map((part) => (
+            <div key={part.id} className="mb-4">
+              <h4 className="font-medium text-sm text-gray-700 mb-2">
+                {part.title}
+              </h4>
+              {part.chapters.map((chapter) => (
+                <Button
+                  key={chapter.id}
+                  variant={selectedChapter?.id === chapter.id ? "default" : "outline"}
+                  size="sm"
+                  className="w-full justify-start mb-1"
+                  onClick={() => {
+                    handleChapterSelect(chapter.id);
+                    setShowMobileChapterList(false);
+                  }}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className="truncate">{chapter.title}</span>
+                    <div className="flex items-center gap-1">
+                      {chapter.isComplete && (
+                        <Badge variant="secondary" className="text-xs">✓</Badge>
+                      )}
+                      <span className="text-xs text-gray-500">
+                        {chapter.wordCount}w
+                      </span>
+                    </div>
+                  </div>
+                </Button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Header with Stats */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
@@ -115,7 +160,7 @@ Konten akan disesuaikan dengan format yang dipilih (${selectedChapter.format}) d
             </p>
           </div>
           
-          <div className="flex gap-4">
+          <div className="hidden md:flex gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600">{stats.totalWords}</div>
               <div className="text-sm text-gray-500">Total Words</div>
@@ -141,8 +186,8 @@ Konten akan disesuaikan dengan format yang dipilih (${selectedChapter.format}) d
       </div>
 
       <div className="grid lg:grid-cols-4 gap-6">
-        {/* Sidebar - Chapter List */}
-        <div className="lg:col-span-1">
+        {/* Sidebar - Chapter List (Desktop Only) */}
+        <div className="hidden lg:block lg:col-span-1">
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Chapters</CardTitle>
@@ -184,7 +229,7 @@ Konten akan disesuaikan dengan format yang dipilih (${selectedChapter.format}) d
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-3">
+        <div className="col-span-full lg:col-span-3">
           {!selectedChapter ? (
             <Card className="h-96 flex items-center justify-center">
               <CardContent className="text-center">

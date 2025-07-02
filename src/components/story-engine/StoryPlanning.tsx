@@ -13,7 +13,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { Badge } from '@/components/ui/badge'; // Unused
-import { Users, Globe, BookOpen, Settings, ArrowRight, Sparkles } from 'lucide-react';
+import { Users, Globe, BookOpen, Settings, ArrowRight, Sparkles, ChevronLeft } from 'lucide-react';
+import { BackButton } from '@/components/ui/back-button';
 
 interface StoryPlanningProps {
   project: StoryProject;
@@ -217,6 +218,23 @@ Klimaks terjadi ketika [momen puncak], di mana semua konflik yang telah dibangun
 
   return (
     <div className="max-w-7xl mx-auto">
+      {/* Mobile Back Button - Fixed at the top left for mobile */}
+      <div className="md:hidden fixed top-2 left-2 z-10 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+        <BackButton onClick={() => setActiveTab('settings')} label="Menu" />
+      </div>
+
+      {/* Mobile Proceed Button - Fixed at the bottom for mobile */}
+      <div className="md:hidden fixed bottom-4 right-4 z-10">
+        <Button 
+          onClick={proceedToWriting}
+          disabled={!canProceedToWriting()}
+          className="shadow-lg"
+        >
+          Proceed to Writing
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+
       {/* Progress Indicator */}
       {renderProgress()}
 
