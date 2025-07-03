@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Sparkles, Play, Pause, ArrowLeft, Trash2, ChevronLeft } from 'lucide-react';
+import { Loader2, Sparkles, Play, Pause, ArrowLeft, Trash2 } from 'lucide-react';
 import { sendChatMessage } from '@/services/api';
 import { countWords } from '@/lib/utils';
 import { toast } from 'sonner';

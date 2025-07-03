@@ -13,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { Badge } from '@/components/ui/badge'; // Unused
-import { Users, Globe, BookOpen, Settings, ArrowRight, Sparkles, ChevronLeft } from 'lucide-react';
+import { Users, Globe, BookOpen, Settings, ArrowRight, Sparkles } from 'lucide-react';
 import { BackButton } from '@/components/ui/back-button';
 
 interface StoryPlanningProps {

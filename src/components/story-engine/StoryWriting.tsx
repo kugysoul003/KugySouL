@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Unused
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BookOpen, Play, Pause, Sparkles, Users, Globe, ChevronLeft } from 'lucide-react';
-// Removed unused: Edit, RotateCcw, FileText
+import { BookOpen, Play, Pause, Sparkles, Users, Globe } from 'lucide-react';
+// Removed unused: Edit, RotateCcw, FileText, ChevronLeft
 import { BackButton } from '@/components/ui/back-button';
 
 interface StoryWritingProps {

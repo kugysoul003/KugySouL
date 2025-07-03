@@ -20,6 +20,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { sendChatMessage } from '@/services/api';
 import { StoryEngineIntegration } from '@/components/story-engine/StoryEngineIntegration';
+import { useRouter } from 'next/navigation';
+import { BackButton } from '@/components/ui/back-button';
 
 interface NovelChapter {
   id: string;
@@ -44,6 +46,8 @@ interface NovelProject {
 }
 
 export default function NovelWriter() {
+  const router = useRouter();
+  
   // Core state
   const [projects, setProjects] = useState<NovelProject[]>([]);
   const [currentProject, setCurrentProject] = useState<NovelProject | null>(null);
@@ -898,8 +902,21 @@ BEGIN CONTINUATION NOW:`;
     return <StoryEngineIntegration onClose={() => setShowStoryEngine(false)} />;
   }
 
+  const handleBack = () => {
+    // Save current content before navigating away
+    if (currentProject && currentChapter) {
+      saveCurrentChapter();
+    }
+    router.push('/novel');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Mobile Back Button - Fixed at the top left for mobile */}
+      <div className="fixed top-2 left-2 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+        <BackButton onClick={handleBack} label="Back to Novel" />
+      </div>
+      
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
