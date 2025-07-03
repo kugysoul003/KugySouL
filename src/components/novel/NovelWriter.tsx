@@ -912,20 +912,26 @@ BEGIN CONTINUATION NOW:`;
       saveCurrentChapter();
     }
     
-    // Force direct navigation instead of relying on Next.js router
-    // This ensures the navigation happens regardless of any router issues
-    window.location.href = '/novel';
-    
     // Log for debugging
-    console.log('Back button clicked, navigating to /novel');
+    console.log('Back button clicked, attempting navigation to /story-engine');
     
-    // As a fallback, also try the Next.js router after a short delay
-    setTimeout(() => {
-      if (window.location.pathname !== '/novel') {
-        console.log('Fallback navigation with router.push');
-        router.push('/novel');
-      }
-    }, 50);
+    // Try multiple navigation methods to ensure it works
+    try {
+      // Method 1: Direct location change (most reliable)
+      window.location.href = '/story-engine';
+      
+      // Method 2: As a fallback, also try the Next.js router after a short delay
+      setTimeout(() => {
+        if (window.location.pathname.includes('novel')) {
+          console.log('Fallback navigation with router.push to /story-engine');
+          router.push('/story-engine');
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // Method 3: Last resort fallback
+      window.location.replace('/story-engine');
+    }
   };
 
   return (
@@ -933,10 +939,10 @@ BEGIN CONTINUATION NOW:`;
       {/* Mobile Back Button - Fixed at the top left for mobile with improved visibility and clickability */}
       {/* Wrapper with direct link as fallback */}
       <a 
-        href="/novel" 
-        className="fixed top-2 left-2 z-[9999] bg-white rounded-lg shadow-lg pointer-events-auto border-2 border-blue-300 hover:shadow-xl transition-all duration-200 cursor-pointer no-underline"
+        href="/story-engine" 
+        className="fixed top-4 left-4 z-[9999] bg-white rounded-lg shadow-lg pointer-events-auto border-2 border-blue-300 hover:shadow-xl transition-all duration-200 cursor-pointer no-underline"
         onClick={(e) => handleBack(e)} // Pass the event to the handler
-        style={{ touchAction: 'manipulation' }} // Improve touch handling on mobile
+        style={{ touchAction: 'manipulation', padding: '2px' }} // Improve touch handling on mobile
       >
         <BackButton 
           onClick={(e) => handleBack(e)} 
