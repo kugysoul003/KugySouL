@@ -913,24 +913,24 @@ BEGIN CONTINUATION NOW:`;
     }
     
     // Log for debugging
-    console.log('Back button clicked, attempting navigation to /writing-tools');
+    console.log('Back button clicked, attempting navigation to /story-engine');
     
     // Try multiple navigation methods to ensure it works
     try {
       // Method 1: Direct location change (most reliable)
-      window.location.href = '/writing-tools';
+      window.location.href = '/story-engine';
       
       // Method 2: As a fallback, also try the Next.js router after a short delay
       setTimeout(() => {
         if (window.location.pathname.includes('novel')) {
-          console.log('Fallback navigation with router.push to /writing-tools');
-          router.push('/writing-tools');
+          console.log('Fallback navigation with router.push to /story-engine');
+          router.push('/story-engine');
         }
       }, 100);
     } catch (error) {
       console.error('Navigation error:', error);
       // Method 3: Last resort fallback
-      window.location.replace('/writing-tools');
+      window.location.replace('/story-engine');
     }
   };
 
@@ -939,7 +939,7 @@ BEGIN CONTINUATION NOW:`;
       {/* Mobile Back Button - Fixed at the top left for mobile with improved visibility and clickability */}
       {/* Wrapper with direct link as fallback */}
       <a 
-        href="/writing-tools" 
+        href="/story-engine" 
         className="fixed top-4 left-4 z-[9999] bg-white rounded-lg shadow-lg pointer-events-auto border-2 border-blue-300 hover:shadow-xl transition-all duration-200 cursor-pointer no-underline"
         onClick={(e) => handleBack(e)} // Pass the event to the handler
         style={{ touchAction: 'manipulation', padding: '2px' }} // Improve touch handling on mobile
