@@ -920,7 +920,10 @@ BEGIN CONTINUATION NOW:`;
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Back Button - Fixed at the top left for mobile with improved visibility and clickability */}
-      <div className="fixed top-2 left-2 z-[9999] bg-white rounded-lg shadow-lg pointer-events-auto border border-blue-200 hover:shadow-xl transition-all duration-200">
+      <div 
+        className="fixed top-2 left-2 z-[9999] bg-white rounded-lg shadow-lg pointer-events-auto border-2 border-blue-300 hover:shadow-xl transition-all duration-200"
+        onClick={handleBack} // Add click handler to the container as well for larger click area
+      >
         <BackButton 
           onClick={handleBack} 
           label="Back to Novel" 
